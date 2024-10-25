@@ -1,6 +1,6 @@
 import React from 'react';
 
-const User = ({ name, location, email, picture, login, createUser }) => {
+const User = ({gender, name, location, email, picture, login, createUser }) => {
 
     async function createUser() {
 /*
@@ -18,12 +18,18 @@ const User = ({ name, location, email, picture, login, createUser }) => {
 */
         const token = '1234567890';
         const body = new FormData();
+
+        body.set("gender", gender);
+        body.set("name_title", name.title);
         body.set("name_first", name.first);
         body.set("name_last", name.last);
+        body.set("country", location.country);
         body.set("email", email);
         body.set("username", login.username);
         body.set("password", login.password);
+        body.set("picture_large", picture.large);
         body.set("picture_medium", picture.medium);
+        body.set("picture_thumbnail", picture.thumbnail);
 
         const response = await fetch(`http://localhost:4000/api/user/insert`, {
             method: 'POST',
@@ -47,7 +53,7 @@ const User = ({ name, location, email, picture, login, createUser }) => {
             <div><strong>Login:</strong> {login.username}</div>
             <div><strong>Password:</strong> {login.password}</div>
             <div><strong>Name:</strong> {name.first} {name.last}</div>
-            <button type="button" onClick= {(e) => createUser()} className="btn btn-danger">Create</button>
+            <button type="button" onClick= {(e) => createUser()} className="btn btn-danger">Insert</button>
         </div>
 
     );
